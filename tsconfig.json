@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+      "strict": true,
+      "module": "CommonJS",
+      "moduleResolution": "Node",
+      "target": "ES2022",
+      "resolveJsonModule": true,
+      "jsx": "react-jsx",
+      "skipLibCheck": true
+  },
+  "exclude": ["./node_modules"]
+}
