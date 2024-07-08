@@ -44,7 +44,9 @@ const App = () => {
         .add(...raw.instructions));
     await wallet.signAllTransactions(txs);
 
+    let x = 1;
     for await (const tx of txs) {
+      console.log(`tx ${x}: in progress...`);
       const transactionId = await connection.sendRawTransaction(tx.serialize(), { minContextSlot });
       const status = await connection.confirmTransaction({
         signature: transactionId,
@@ -55,6 +57,9 @@ const App = () => {
 
       if (status.value.err) {
         throw new Error(status.value.err.toString());
+      } else {
+        console.log(`tx ${x}: complete`);
+        x++;
       }
     }
   };
