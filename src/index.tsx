@@ -38,11 +38,11 @@ const App = () => {
       await connection.getLatestBlockhashAndContext({ commitment });
     const priorityFee = ComputeBudgetProgram.setComputeUnitPrice({ microLamports: 140000 });
     const raws = await pool!.claimAllRewards({ owner: wallet.publicKey!, positions: positions! });
-    const txs = raws.map(raw =>
+    let txs = raws.map(raw =>
       new Transaction({ blockhash, lastValidBlockHeight, feePayer: wallet.publicKey! })
         .add(priorityFee)
         .add(...raw.instructions));
-    await wallet.signAllTransactions(txs);
+    txs = await wallet.signAllTransactions(txs) as Transaction[];
 
     let x = 1;
     for await (const tx of txs) {
